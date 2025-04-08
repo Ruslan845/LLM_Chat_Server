@@ -9,6 +9,6 @@ services:
       - key: DJANGO_SETTINGS_MODULE
         value: backend.settings
       - key: SECRET_KEY
-        value: your-secret-key
+        value: ns+1h0np)+d5wum&s4$r941^k6yih=%@d2anhm@4&6w3w_hha^
       - key: DEBUG
         value: "False"
