@@ -33,7 +33,6 @@ def getanswer(model, question):
         return answer
     except Exception as e:
         return str(e)
-    return str("Yes!!!! It's answer.")
 
 @csrf_exempt
 @permission_classes([IsAuthenticated])
