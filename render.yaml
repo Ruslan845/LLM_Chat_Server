@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: django-backend
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn backend.wsgi
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: backend.settings
+      - key: SECRET_KEY
+        value: ns+1h0np)+d5wum&s4$r941^k6yih=%@d2anhm@4&6w3w_hha^
+      - key: DEBUG
+        value: "False"
