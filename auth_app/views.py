@@ -26,7 +26,7 @@ def set_csrf_cookie(request):
     return response
 
 # Google Authentication
-# @csrf_exempt
+@csrf_exempt
 def google_auth_view(request):
     token = "token"
     if request.content_type == 'application/json':
@@ -80,7 +80,7 @@ def google_auth_view(request):
 
 
 # LinkedIn Authentication
-# @csrf_exempt
+@csrf_exempt
 def linkedin_auth_view(request):
     code = request.POST.get('code')
     redirect_uri = settings.REDIRECT_URI  # Your redirect URI
@@ -132,7 +132,7 @@ def linkedin_auth_view(request):
         return JsonResponse({'error': 'Invalid LinkedIn authorization code'}, status=400)
 
 # Facebook Authentication
-# @csrf_exempt
+@csrf_exempt
 def facebook_auth_view(request):
     token = request.POST.get('token')
     facebook_verify_url = f"https://graph.facebook.com/me?fields=id,name,email&access_token={token}"
@@ -160,7 +160,7 @@ def facebook_auth_view(request):
     
 
 @api_view(['POST'])
-# @csrf_exempt
+@csrf_exempt
 def refresh_token(request):
     refresh_token = request.data.get('refresh_token')
     try:
