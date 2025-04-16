@@ -47,12 +47,14 @@ def google_auth_view(request):
         if token.startswith('Bearer '):
             token = token[7:]  # Remove 'Bearer ' prefix
         print('token after removing prefix')
-        user_temp = get_user_from_id_token(token)
+        # user_temp = get_user_from_id_token(token)
 
-        print('!!!!!!!!!!!!!!!!user_temp', user_temp)
+        response = requests.get(f'https://oauth2.googleapis.com/tokeninfo?id_token={token}')
+        # print('!!!!!!!!!!!!!!!!user_temp', user_temp)
         # user_data = user_temp.to_dict()
-        email = user_temp.get('email')
-        name = user_temp.get('name')
+        user_info = response.json()
+        email = user_info.get("email")
+        name = user_info.get("email")
         
         # Save or retrieve user in the database
         user = User.objects(email=email).first()
@@ -61,8 +63,8 @@ def google_auth_view(request):
             user = User(
                 username=name,
                 email=email,
-                social_auth={'provider': 'google', 'id': user_temp.get('sub')},
-                avatar=user_temp.get('picture'),
+                social_auth={'provider': 'google', 'id': response.sub},
+                avatar=response.picture,
                 is_admin=False,
             )
             user.save()

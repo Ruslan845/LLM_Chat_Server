@@ -1,5 +1,7 @@
 import json
-from openai import OpenAI
+import requests
+# from openai import OpenAI
+import openai
 from django.shortcuts import render
 from django.conf import settings
 from django.http import JsonResponse
@@ -12,7 +14,52 @@ from rest_framework.decorators import permission_classes
 from auth_app.serializers import ChatListSerializer
 
 
-client = OpenAI(api_key=settings.OPENAI_API_KEY)
+# client = OpenAI(api_key=settings.OPENAI_API_KEY)
+client = openai.OpenAI(api_key = settings.OPENAI_API_KEY)
+DEEPAI_API_KEY = settings.DEEPAI_API_KEY
+
+def get_answer_openai(question, model):
+    try:
+        response = client.chat.completions.create(
+            model=model,
+            messages=[{
+                    "role": "user",
+                    "content": question
+                }],
+            max_tokens=100,
+            temperature=0.7,
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        return str(e)
+    
+def get_answer_deepseek(question, model):
+    url = "https://api.deepseek.com/v1/chat/completions"
+    headers = {
+        "Authorization": "Bearer " + DEEPAI_API_KEY,
+        "Content-Type": "application/json"
+    }
+    data = {
+        "model" : model,
+        "messages": [
+            {
+                "role": "user",
+                "content": question
+            }
+        ],
+        "temperature": 0.7,
+        "max_tokens": 1000,
+    }
+    print(f"Request to DeepSeek API: {url}")
+    response = requests.post(url, headers=headers, json=data)
+    if response.status_code == 200:
+        data = response.json()
+        answer = data["choices"][0]["message"]["content"]
+        return answer
+    # print(response,json)
+    return response.get('messages')[0].get('content')
+
+
 
 # Create your views here.   
 
@@ -20,18 +67,11 @@ client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
 def getanswer(model, question):
     try:
-        response = client.chat.completions.create(
-            model=model,
-            messages=[
-                {
-                    "role": "user",
-                    "content": question
-                }
-            ],
-            temperature=0.7,
-            max_tokens=1000
-        )
-        answer = response.choices[0].message.content
+        answer = ''
+        if model.startswith('gpt') or model.startswith('text'):
+            answer = get_answer_openai(question, model)
+        elif model.startswith('deepseek'):
+            answer = get_answer_deepseek(question, model)
         print("question: ", question)
         print("answer: ", answer)
         return answer
