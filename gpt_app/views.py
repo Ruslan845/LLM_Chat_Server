@@ -20,16 +20,20 @@ client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
 def getanswer(model, question):
     try:
-        response = client.chat.completions.create(model=model,
-        messages=[
-            {
-                "role": "user",
-                "content": question
-            }
-        ],
-        temperature=0.7,
-        max_tokens=1000)
+        response = client.chat.completions.create(
+            model=model,
+            messages=[
+                {
+                    "role": "user",
+                    "content": question
+                }
+            ],
+            temperature=0.7,
+            max_tokens=1000
+        )
         answer = response.choices[0].message.content
+        print("question: ", question)
+        print("answer: ", answer)
         return answer
     except Exception as e:
         return str(e)
@@ -43,7 +47,7 @@ def add_chat(request):
             user_id = body.get('user_id'),
             chat_list = [
                 {
-                    "number": 1,
+                    "role": "user",
                     "text": body.get('question'),
                     "model": body.get('model'),
                     "date": datetime.now(),
@@ -56,7 +60,7 @@ def add_chat(request):
         answer = getanswer(body.get('model'), body.get('question'))
         chat.chat_list.append(
             {
-                "number": 2,
+                "role": "bot",
                 "text": answer,
                 "model": body.get('model'),
                 "date": datetime.now(),
@@ -82,12 +86,8 @@ def ask_gpt(request):
     body = getrequest(request)
     chat = Chatlist.objects(id = body.get('chat_id')).first()
     try:
-        number = 0
-        for item in chat.chat_list:
-            if item:
-                number = item.get('number')
         question = {
-                "number": number + 1,
+                "role": "user",
                 "text": body.get('question'),
                 "model": body.get('model'),
                 "date": datetime.now(),
@@ -98,7 +98,7 @@ def ask_gpt(request):
 
         answer_text = getanswer(body.get('model'), body.get('question'))
         answer = {
-                "number": number + 2,
+                "role": "bot",
                 "text": answer_text,
                 "model": body.get('model'),
                 "date": datetime.now(),

@@ -69,7 +69,7 @@ class ChatListSerializer:
     @staticmethod
     def serialize_list(chat_list):
         return{
-            'number': chat_list.get("number"),
+            'role': chat_list.get("role"),
             'text': chat_list.get("text"),
             'model': chat_list.get("model"),
             'date': chat_list.get("date").isoformat() if chat_list.get("date") else None,

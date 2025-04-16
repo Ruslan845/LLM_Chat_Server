@@ -3,6 +3,9 @@ import json
 import base64
 import firebase_admin
 from firebase_admin import credentials, auth
+from dotenv import load_dotenv
+
+load_dotenv(dotenv_path=".env.local")
 
 firebase_json = base64.b64decode(os.getenv("FIREBASE_CREDENTIALS_BASERE")).decode("utf-8")
 firebase_data = json.loads(firebase_json)

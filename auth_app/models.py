@@ -14,7 +14,6 @@ class Chatlist(me.Document):
     # number = me.IntField()
     # chat_category = me.StringField(max_length=50)
     chat_list = me.ListField(default=[]) # number, text, model, date, deleteddate
-
     # auth = me.BooleanField(default = False)
     is_deleted = me.BooleanField(default = False)
 
