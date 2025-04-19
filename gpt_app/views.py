@@ -14,13 +14,13 @@ from rest_framework.decorators import permission_classes
 from auth_app.serializers import ChatListSerializer
 from user_management.permissions import IsAdminOrReadOnly
 from apikey.views import get_one
-from serpapi import GoogleSearch
+# from serpapi import GoogleSearch
 
 
 # client = OpenAI(api_key=settings.OPENAI_API_KEY)
 client = openai.OpenAI(api_key = get_one("OPENAI_API_KEY"))
 DEEPAI_API_KEY = get_one("DEEPSEEK_API_KEY")
-SERP_API_KEY = get_one("SERP_API_KEY")
+# SERP_API_KEY = get_one("SERP_API_KEY")
 
 def get_answer_openai(question, model, tem, token):
     try:
@@ -61,20 +61,20 @@ def get_answer_deepseek(question, model, tem, token):
         return answer
     return response.get('messages')[0].get('content')
 
-def web_search(question):
-    search = GoogleSearch({
-        "q": question,
-        "api_key": SERP_API_KEY,
-    })
-    results = search.get_dict()
-    answers = results.get("organic_results", [])
-    result_question = "User asked: " + question + "\n I searched the web and found the following:\n"
+# def web_search(question):
+#     search = GoogleSearch({
+#         "q": question,
+#         "api_key": SERP_API_KEY,
+#     })
+#     results = search.get_dict()
+#     answers = results.get("organic_results", [])
+#     result_question = "User asked: " + question + "\n I searched the web and found the following:\n"
     
-    for index, answer in enumerate(answers):
-        result_question += f"{index+1}. {answer.get('title')} - {answer.get('link')}\n"
-    result_question += "\nUsing the above information, answer the user's question in a clear and concise way.";
-    print("question: " + question + "\nResult_question: " + answer + "\n\n---\n")
-    return result_question
+#     for index, answer in enumerate(answers):
+#         result_question += f"{index+1}. {answer.get('title')} - {answer.get('link')}\n"
+#     result_question += "\nUsing the above information, answer the user's question in a clear and concise way.";
+#     print("question: " + question + "\nResult_question: " + answer + "\n\n---\n")
+#     return result_question
 
 # def getonelist() 
 
