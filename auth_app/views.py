@@ -59,7 +59,7 @@ def google_auth_view(request):
             user = User(
                 username=name,
                 email=email,
-                social_auth={'provider': 'google', 'id': response.sub},
+                social_auth={'provider': 'google', 'id': user_info.get("sub")},
                 avatar=response.picture,
                 is_admin=False,
             )
