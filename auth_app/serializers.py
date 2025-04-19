@@ -20,10 +20,13 @@ class UserSerializer:
         """Serialize a list of user objects."""
         return [
             {
-                'username': user.username,
-                'social_auth': user.social_auth,
                 'id': str(user.id),
+                'username': user.username,
+                'email': user.email,
+                'is_active': user.is_active,
+                'social_auth': user.social_auth,
                 'is_admin': user.is_admin,
+                'models': user.models,
             }
             for user in users
         ]
@@ -56,6 +59,17 @@ class UserSerializer:
         user.save()
         return user, None
 
+class APIKeySerializer:
+    @staticmethod
+    def serialize_one(key):
+        return {
+            'name': key['name'],
+            'value': key['value'],
+        }
+    @classmethod    
+    def serialize_all(cls, data_list):
+        return [cls.serialize_one(item) for item in data_list]
+
 class ChatListSerializer:
     @staticmethod
     def serialize_one(chatlist):
@@ -74,6 +88,7 @@ class ChatListSerializer:
             'model': chat_list.get("model"),
             'date': chat_list.get("date").isoformat() if chat_list.get("date") else None,
             'deleteddate': chat_list.get("deleteddate").isoformat() if chat_list.get("deleteddate") else None,
+            'isnew': chat_list.get("isnew"),
         }
 
     @staticmethod
@@ -81,6 +96,7 @@ class ChatListSerializer:
         return {
             'chat_id': str(chatlist.get("chat_id")),
             'chat_title': chatlist.get("chat_title"),
+            'chat_date': chatlist.get("chat_date").isoformat() if chatlist.get("chat_date") else None,
         }
     
     @classmethod

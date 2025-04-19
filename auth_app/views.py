@@ -39,18 +39,15 @@ def google_auth_view(request):
         if not body:
             return JsonResponse({'error': 'No data provided'}, status=400)
     token = body.get('token')
-    print(token)
     if not token:
         return JsonResponse({'error': 'No token provided'}, status=400)
 
     try:
         if token.startswith('Bearer '):
             token = token[7:]  # Remove 'Bearer ' prefix
-        print('token after removing prefix')
         # user_temp = get_user_from_id_token(token)
 
         response = requests.get(f'https://oauth2.googleapis.com/tokeninfo?id_token={token}')
-        # print('!!!!!!!!!!!!!!!!user_temp', user_temp)
         # user_data = user_temp.to_dict()
         user_info = response.json()
         email = user_info.get("email")
@@ -58,7 +55,6 @@ def google_auth_view(request):
         
         # Save or retrieve user in the database
         user = User.objects(email=email).first()
-        print('user', user)
         if not user:
             user = User(
                 username=name,
@@ -68,10 +64,7 @@ def google_auth_view(request):
                 is_admin=False,
             )
             user.save()
-        print('user after save', user)
         access_token, refresh_token = create_tokens(user)
-        print('Access Token:', access_token)
-        print('Refresh Token:', refresh_token)
 
         # Serialize the user object using UserSerializer
         user_serialized = UserSerializer.serialize_one(user)

@@ -9,7 +9,6 @@ try:
     messages=[
         {"role": "user", "content": "Hello, OpenAI!"}
     ])
-    print(response.choices[0].message.content)
 except openai.AuthenticationError:
     print("❌ API key is invalid or billing not set up.")
 except Exception as e:

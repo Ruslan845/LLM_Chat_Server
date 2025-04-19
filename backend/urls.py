@@ -23,4 +23,5 @@ urlpatterns = [
     path('api/auth/', include('auth_app.urls')),  # Include your app URLs
     path('api/admin/', include('user_management.urls')),  # Include your admin app URLs
     path('api/gpt/', include('gpt_app.urls')),  # Include your GPT app URLs.urls')),  # Include your GPT app URLs
+    path('api/keys/', include('apikey.urls')),  # Include your keys app URLs)
 ]

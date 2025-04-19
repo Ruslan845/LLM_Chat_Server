@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'corsheaders',  # CORS headers
     'user_management',  # Your user management app
     'gpt_app',  # Your GPT app
+    'apikey',  # Your API key management app
 ]
 
 REST_FRAMEWORK = {
@@ -214,14 +215,11 @@ from dotenv import load_dotenv
 
 load_dotenv(dotenv_path=".env.local")
 
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-print('OPENAPI',OPENAI_API_KEY)
-if not OPENAI_API_KEY:
-    raise ValueError("Missing OpenAI API key. Please set the environment variable 'OPENAI_API_KEY'")        
+# OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY')
 SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET')
 REDIRECT_URI = os.getenv('REDIRECT_URI')
 SECRET_KEY = os.getenv('SECRET_KEY')
-DEEPAI_API_KEY = os.getenv('DEEPAI_API_KEY')
+# DEEPAI_API_KEY = os.getenv('DEEPAI_API_KEY')
 
 mongoengine.connect('perplexity', host=os.getenv('MONGO_DB_URI'))
