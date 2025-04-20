@@ -155,7 +155,7 @@ def ask_gpt(request):
         chat.chat_list.append(question)
         chat.save()
 
-        answer_text = getanswer(body.get('model'), body.get('question'), body.get('temperature'), body.get('max_token'), body.get('web'))
+        answer_text = getanswer(body.get('model'), body.get('question'), body.get('temperature'), body.get('max_token'))
         answer = {
                 "role": "bot",
                 "text": answer_text,

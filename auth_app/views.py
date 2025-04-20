@@ -53,6 +53,8 @@ def google_auth_view(request):
         email = user_info.get("email")
         name = user_info.get("email")
         
+        print(f"User info: {user_info}")
+
         # Save or retrieve user in the database
         user = User.objects(email=email).first()
         if not user:
