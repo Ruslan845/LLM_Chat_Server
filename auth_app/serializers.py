@@ -1,4 +1,5 @@
 from auth_app.models import User
+from datetime import datetime
 
 class UserSerializer:
     @staticmethod
@@ -96,7 +97,7 @@ class ChatListSerializer:
         return {
             'chat_id': str(chatlist.get("chat_id")),
             'chat_title': chatlist.get("chat_title"),
-            'chat_date': chatlist.get("chat_date").isoformat() if chatlist.get("chat_date") else None,
+            'chat_date': chatlist.get("chat_date").isoformat() if isinstance(chatlist.get("chat_date"), datetime) else None,
         }
     
     @classmethod

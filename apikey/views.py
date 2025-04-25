@@ -22,7 +22,7 @@ def get_all(request):
         return JsonResponse({"keys": s_key_list}, status=200)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
-    
+
 def get_one(name):
     try:
         key = APIKey.objects(name=name).first()

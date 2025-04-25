@@ -33,7 +33,6 @@ def get_firebase_credentials():
         # Decode the Base64 string and parse the JSON content
         print("Decoding Firebase credentials...")
         firebase_json = base64.b64decode(firebase_credentials_padded).decode("utf-8")
-        print("Decoded credentials JSON:", firebase_json)
         return json.loads(firebase_json)
     except Exception as e:
         print(f"Error decoding Firebase credentials: {e}")
