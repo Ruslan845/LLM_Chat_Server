@@ -243,9 +243,7 @@ def add_chat_history(request):
             return JsonResponse({"error": "Missing 'chats' in request body"}, status=400)
 
         chat.chat_list.append(chats[0])
-        chat.chat_list.append(chats[1])
         print("chat0: ", chats[0])
-        print("chat1: ", chats[1])
         chat.save()
 
         return JsonResponse({"message": "Chat history updated"}, status=200)
