@@ -46,6 +46,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',  # Your frontend URL
     'http://localhost:3001',  # Your frontend URL
     'https://llm-chat-client.vercel.app',  # Your frontend URL
+    "https://llm-chat-client.onrender.com"
 ]
 
 # Quick-start development settings - unsuitable for production
@@ -208,6 +209,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Your frontend URL
     "http://localhost:3001",  # Your frontend URL
     "https://llm-chat-client.vercel.app",  # Your frontend URL
+    "https://llm-chat-client.onrender.com"
 ]
 
 import os
