@@ -215,7 +215,7 @@ CORS_ALLOWED_ORIGINS = [
 import os
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path=".env.local")
+#load_dotenv(dotenv_path=".env.local")
 
 # OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY')
